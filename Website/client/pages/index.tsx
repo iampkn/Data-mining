@@ -85,7 +85,7 @@ const Home: NextPage = (props) => {
         setErrMsg('No sever response')
       }
       if (error instanceof AxiosError) {
-        setErrMsg(error.response?.data.message)
+        setErrMsg(error.message)
       }
     }
   }
