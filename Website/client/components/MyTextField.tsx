@@ -8,10 +8,10 @@ type Props = {
 }
 const MyTextField = ({ name, ...otherProps }: Props) => {
     return (
-        <FastField name={name}>
+        <FastField name={name} >
             {({ field, form, meta }: FastFieldProps<any>) => (
                 <>
-                    <TextField {...otherProps} {...field} error={Boolean(meta.error && meta.touched)} />
+                    <TextField sx={{ width: 300 }} {...otherProps} {...field} error={Boolean(meta.error && meta.touched)} />
                     {meta.touched && meta.error ? (
                         <FormHelperText error sx={{ marginTop: '0px' }}>
                             {meta.error}
