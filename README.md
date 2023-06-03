@@ -12,7 +12,7 @@ This is a classification product designed to predict the likelihood of heart dis
 
 ## Technologies Used
 
-- Front-end: Next.js, React, JavaScript, HTML, CSS
+- Front-end: Next.js, React, JavaScript, HTML, CSS, Material UI
 
 - Back-end: Flask, Python
 
