@@ -2,37 +2,21 @@ import * as yup from "yup"
 
 export const validationForm = yup.object().shape({
     gender: yup.string().required("Gender is required"),
-    age: yup
-        .number()
-        .required("Age is required")
-        .typeError("Value must be number")
-        .min(0, "Min value is 0"),
     BPMeds: yup.string().required("BPMeds information is required"),
 
     prevalentHyp: yup
         .string()
         .required("Prevalent hypertension information is required"),
     diabetes: yup.string().required("Diabetes information is required"),
-
-    sysBP: yup
+    glucose: yup
         .number()
-        .required("Systolic blood pressure is required")
-        .typeError("Value must be number")
-        .min(0, "Min value is 0"),
-    diaBP: yup
+        .required("Glucose information is required")
+        .min(0, "Glucose must be greater than 0")
+        .typeError("Glucose must be a number"),
+    cigsPerDay: yup
         .number()
-        .required("Diastolic blood pressure is required")
-        .typeError("Value must be number")
-        .min(0, "Min value is 0"),
-
-    height: yup
-        .number()
-        .required("Height is required")
-        .typeError("Value must be number")
-        .min(0, "Min value is 0"),
-    weight: yup
-        .number()
-        .required("Weight level is required")
-        .typeError("Value must be number")
-        .min(0, "Min value is 0"),
+        .required("Cigarettes per day information is required")
+        .min(0, "Cigarettes per day must be greater than 0")
+        .typeError("Cigarettes per day must be a number"),
+    prevalentStroke: yup.string().required("Prevalent stroke is required"),
 })

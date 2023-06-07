@@ -6,13 +6,14 @@ import { string } from "yup"
 
 export interface initialForm {
     gender: string
-    age: string
+    age?: string
     BPMeds: string
     prevalentHyp: string
     diabetes: string
-    sysBP: string
-    diaBP: string
-    BMI: string
-    height: string
-    weight: string
+    sysBP?: string
+    diaBP?: string
+    BMI?: string
+    cigsPerDay: string
+    prevalentStroke: string
+    glucose: string
 }

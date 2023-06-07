@@ -12,25 +12,17 @@ import { AxiosError } from 'axios'
 
 const initialValues = {
   gender: '',
-  age: '',
+  cigsPerDay: '',
   BPMeds: '',
   prevalentHyp: '',
   diabetes: '',
-  sysBP: '',
-  diaBP: '',
-  BMI: '',
-  height: '',
-  weight: ''
+  glucose: '',
+  prevalentStroke: '',
 };
 
 const GENDER_OPTIONS = [
   { label: 'Male', id: 0 },
   { label: 'Female', id: 1 },
-];
-
-const PREVALENTSTROKE_OPTIONS = [
-  { label: 'Yes', id: 1 },
-  { label: 'No', id: 0 },
 ];
 
 const BDMEDS_OPTIONS = [
@@ -47,16 +39,13 @@ const DIABETES_OPTIONS = [
   { label: 'No', id: 0 },
 ];
 
-const PREDICT_URL = '/predict'
+const PREVALENTSTROKE_OPTIONS = [
+  { label: 'Yes', id: 1 },
+  { label: 'No', id: 0 },
+];
 
-function calculateBMI(weight: number, height: number): string {
+const PREDICT_URL = 'predict'
 
-  const heightInMeters = height / 100
-  const bmi = weight / (heightInMeters * heightInMeters)
-  const roundedBMI = Math.round(bmi * 100) / 100
-
-  return roundedBMI.toString();
-}
 
 const Home: NextPage = (props) => {
   const [errMsg, setErrMsg] = useState<string>('')
@@ -65,8 +54,6 @@ const Home: NextPage = (props) => {
   async function handleSubmit(values: initialForm) {
     setErrMsg('')
     setPredictValue('')
-
-    values.BMI = calculateBMI(Number(values.weight), Number(values.height))
 
     try {
       const response = await api.post(PREDICT_URL, JSON.stringify(values), {
@@ -134,22 +121,32 @@ const Home: NextPage = (props) => {
                       />
                       <MyTextField
                         required
-                        id='age'
-                        label='Age'
-                        placeholder='Enter your age here '
-                        name={'age'} />
+                        id='cigsPerDay'
+                        label='Cigarettes per day'
+                        placeholder='Enter 0 if you do not smoke'
+                        name={'cigsPerDay'} />
 
-                      <MyTextField
-                        required
-                        placeholder='Input your height (cm)'
-                        label='Height'
-                        name={'height'} />
-
-                      <MyTextField
-                        required
-                        placeholder='Input your weight (kg)'
-                        label='Weight'
-                        name={'weight'} />
+                      <Autocomplete
+                        disablePortal
+                        options={PREVALENTSTROKE_OPTIONS}
+                        getOptionLabel={(option) => option.label}
+                        sx={{ width: 300 }}
+                        renderInput={(params) => (
+                          <TextField
+                            {...params}
+                            required
+                            id='prevalentStroke'
+                            label="Prevalent Stroke"
+                            value={formik.values.prevalentStroke}
+                            error={Boolean(formik.errors.prevalentStroke) && formik.touched.prevalentStroke}
+                            helperText={formik.touched.prevalentStroke ? formik.errors.prevalentStroke : null}
+                            margin='normal'
+                          />
+                        )}
+                        onChange={(e, newValue) => {
+                          formik.setFieldValue('prevalentStroke', newValue ? newValue.id : ''); // Save the id value to formik values
+                        }}
+                      />
 
                     </Stack>
                   </Grid>
@@ -191,6 +188,19 @@ const Home: NextPage = (props) => {
                         }}
                       />
 
+
+
+                    </Stack>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <Stack spacing={2}>
+                      <MyTextField
+                        required
+                        id='glucose'
+                        label='Blood Glucose Level'
+                        name='glucose'
+                      />
+
                       <Autocomplete
                         disablePortal
                         options={DIABETES_OPTIONS}
@@ -208,23 +218,6 @@ const Home: NextPage = (props) => {
                         }}
                       />
 
-                    </Stack>
-                  </Grid>
-                  <Grid item xs={4}>
-                    <Stack spacing={2}>
-                      <MyTextField
-                        required
-                        id='sysBP'
-                        label='Systolic Blood Pressure'
-                        name='sysBP'
-                      />
-
-                      <MyTextField
-                        required
-                        id='diaBP'
-                        label='Diastolic Blood Pressure'
-                        name='diaBP'
-                      />
                     </Stack>
                   </Grid>
                 </Grid>
